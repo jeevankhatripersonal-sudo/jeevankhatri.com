@@ -752,21 +752,46 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
         <a href="https://www.instagram.com/jeevan_khatri?igsh=d3VoZnBhOWhybHFp" class="c-method" target="_blank" rel="noopener"><div class="c-icon">◈</div>@jeevan_khatri</a>
       </div>
     </div>
-    <div class="form">
+    <div class="form" id="contactForm">
       <div class="form-row">
-        <div class="field"><label class="f-label">Your Name</label><input class="f-input" type="text" placeholder="Artist or Producer name"/></div>
-        <div class="field"><label class="f-label">Email</label><input class="f-input" type="email" placeholder="your@email.com"/></div>
+        <div class="field">
+          <label class="f-label">Your Name</label>
+          <input class="f-input" type="text" id="f-name" placeholder="Artist or Producer name" required/>
+        </div>
+        <div class="field">
+          <label class="f-label">Email</label>
+          <input class="f-input" type="email" id="f-email" placeholder="your@email.com" required/>
+        </div>
       </div>
       <div class="field">
         <label class="f-label">Service Needed</label>
-        <select class="f-input">
+        <select class="f-input" id="f-service">
           <option value="" disabled selected>Select a service</option>
-          <option>Mixing & Mastering</option><option>Mastering Only</option><option>Beat Production</option>
-          <option>Mentorship</option><option>Learn Music Production</option><option>Learn Mixing & Mastering</option>
+          <option>Mixing & Mastering</option>
+          <option>Mastering Only</option>
+          <option>Beat Production</option>
+          <option>Mentorship</option>
+          <option>Learn Music Production</option>
+          <option>Learn Mixing & Mastering</option>
         </select>
       </div>
-      <div class="field"><label class="f-label">Tell me about your project</label><textarea class="f-input" placeholder="Genre, references, deadline, any details that help..."></textarea></div>
-      <a href="mailto:contact@jeevankhatri.com" class="btn btn-gold" style="text-align:center;display:block;padding:14px;">Send Inquiry</a>
+      <div class="field">
+        <label class="f-label">Tell me about your project</label>
+        <textarea class="f-input" id="f-message" placeholder="Genre, references, deadline, any details that help..."></textarea>
+      </div>
+
+      <!-- Submit button -->
+      <button type="button" id="f-submit" class="btn btn-gold" style="text-align:center;display:block;padding:14px;width:100%;cursor:pointer;font-family:'Outfit',sans-serif;">
+        Send Inquiry
+      </button>
+
+      <!-- Status messages -->
+      <div id="f-success" style="display:none;margin-top:16px;padding:16px 20px;border:1px solid rgba(182,144,62,0.4);background:rgba(182,144,62,0.08);font-size:13px;color:var(--sand);letter-spacing:0.05em;">
+        ✓ Message sent. I'll get back to you within 24 hours.
+      </div>
+      <div id="f-error" style="display:none;margin-top:16px;padding:16px 20px;border:1px solid rgba(255,80,80,0.3);background:rgba(255,80,80,0.06);font-size:13px;color:#ff6b6b;letter-spacing:0.05em;">
+        Something went wrong. Please email me directly at contact@jeevankhatri.com
+      </div>
     </div>
   </div>
 </section>
@@ -785,6 +810,55 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
 <script>
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); });
+
+  // ── Contact form → Google Sheets ──
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxcL_KOBciPzSKomFLGaLy7XITrint4W_th97YmcZW47QU-aJG5BwEb10E_BPF6lNtJ/exec';
+
+  document.getElementById('f-submit').addEventListener('click', async function() {
+    const name    = document.getElementById('f-name').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const service = document.getElementById('f-service').value;
+    const message = document.getElementById('f-message').value.trim();
+
+    // Basic validation
+    if (!name || !email || !service) {
+      alert('Please fill in your name, email, and select a service.');
+      return;
+    }
+
+    const btn = document.getElementById('f-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+
+    document.getElementById('f-success').style.display = 'none';
+    document.getElementById('f-error').style.display = 'none';
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, service, message })
+      });
+
+      // no-cors means we can't read the response — assume success if no error thrown
+      document.getElementById('f-success').style.display = 'block';
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-service').value = '';
+      document.getElementById('f-message').value = '';
+      btn.textContent = 'Send Inquiry';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+
+    } catch (err) {
+      document.getElementById('f-error').style.display = 'block';
+      btn.textContent = 'Send Inquiry';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  });
 </script>
 </body>
 </html>
