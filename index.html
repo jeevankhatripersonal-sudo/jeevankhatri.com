@@ -226,16 +226,14 @@ nav.scrolled { border-bottom-color: rgba(255,255,255,0.07); }
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 12px;
   overflow: hidden;
-  display: flex; flex-direction: column;
   transition: border-color 0.3s, background 0.3s;
 }
 .ba-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(182,144,62,0.25); }
 .ba-video {
   width: 100%;
   aspect-ratio: 9/16;
-  background: linear-gradient(160deg, #1c1916 0%, #0d0c0a 100%);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 10px;
+  background: #000;
+  overflow: hidden;
   flex-shrink: 0;
 }
 .ba-play {
@@ -244,11 +242,10 @@ nav.scrolled { border-bottom-color: rgba(255,255,255,0.07); }
   display: flex; align-items: center; justify-content: center;
   color: var(--gold); font-size: 16px; opacity: 0.6;
 }
+.ba-video video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
 .ba-vid-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.5; }
-.ba-info { padding: 24px 28px 28px; }
-.ba-title { font-weight: 300; font-size: 17px; color: var(--white); margin-bottom: 6px; }
-.ba-genre { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-.ba-footnote { margin-top: 28px; font-size: 12px; color: var(--muted); font-style: italic; text-align: center; }
 
 /* ── SERVICES ── */
 .services-label {
@@ -283,6 +280,7 @@ nav.scrolled { border-bottom-color: rgba(255,255,255,0.07); }
   width: 100%;
   flex-shrink: 0;
   line-height: 0;
+  position: relative;
 }
 .svc-video-inner {
   width: 100%;
@@ -379,8 +377,8 @@ nav.scrolled { border-bottom-color: rgba(255,255,255,0.07); }
 /* ── REVIEWS CAROUSEL ── */
 .reviews-track-wrap {
   overflow: hidden;
-  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 .reviews-track {
   display: flex; gap: 20px;
@@ -392,26 +390,68 @@ nav.scrolled { border-bottom-color: rgba(255,255,255,0.07); }
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+/* New review card — Basslila style */
 .review-card {
-  background: var(--ink);
-  border: 1px solid rgba(255,255,255,0.06);
-  padding: 28px 24px; width: 310px; flex-shrink: 0; border-radius: 2px;
+  width: 280px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: #111009;
+  display: flex;
+  flex-direction: column;
 }
-.review-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-.review-avatar {
-  width: 46px; height: 46px; border-radius: 50%;
-  background: var(--ash); overflow: hidden; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px; color: var(--muted);
+.review-photo {
+  width: 100%;
+  aspect-ratio: 3/2.8;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
 }
-.review-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.review-meta { flex: 1; min-width: 0; }
-.review-name { font-size: 13px; font-weight: 400; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.review-handle { font-size: 10px; letter-spacing: 0.08em; color: var(--gold); margin-top: 2px; }
-.review-stars { color: var(--gold); font-size: 11px; letter-spacing: 2px; margin-bottom: 12px; }
-.review-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 13.5px; color: var(--bone); line-height: 1.75; }
-.review-source { display: flex; align-items: center; gap: 6px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); opacity: 0.45; }
-.g-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); }
+.review-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.review-card:hover .review-photo img { transform: scale(1.04); }
+.review-body {
+  padding: 18px 18px 20px;
+  display: flex; flex-direction: column; flex: 1;
+  background: #111009;
+}
+.review-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500; font-size: 16px;
+  color: var(--white); margin-bottom: 10px;
+  line-height: 1.2;
+}
+.review-meta-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.review-stars {
+  color: var(--gold); font-size: 12px; letter-spacing: 2px;
+}
+.review-ig {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 3px;
+}
+.review-ig-icon {
+  color: var(--gold); opacity: 0.8;
+}
+.review-handle {
+  font-size: 9px; letter-spacing: 0.1em;
+  color: var(--gold); opacity: 0.7;
+}
+.review-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 13px;
+  color: var(--warm); line-height: 1.75;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 12px;
+}
 
 /* ── CONTACT ── */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
@@ -419,7 +459,7 @@ nav.scrolled { border-bottom-color: rgba(255,255,255,0.07); }
 .contact-methods { display: flex; flex-direction: column; gap: 14px; }
 .c-method { display: flex; align-items: center; gap: 14px; font-size: 13px; color: var(--warm); text-decoration: none; transition: color 0.25s; }
 .c-method:hover { color: var(--bone); }
-.c-icon { width: 34px; height: 34px; background: var(--ash); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.c-icon { width: 34px; height: 34px; background: var(--ash); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: var(--gold); }
 .form { display: flex; flex-direction: column; gap: 22px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .field { display: flex; flex-direction: column; gap: 7px; }
@@ -444,6 +484,48 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--ink); }
 ::-webkit-scrollbar-thumb { background: var(--ash); }
+
+/* ── Corner cross decorations on lifted sections ── */
+.bg-lift {
+  position: relative;
+}
+.bg-lift .corner-tl,
+.bg-lift .corner-tr,
+.bg-lift .corner-bl,
+.bg-lift .corner-br {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  z-index: 2;
+  pointer-events: none;
+}
+.bg-lift .corner-tl { top: 14px; left: 14px; }
+.bg-lift .corner-tr { top: 14px; right: 14px; }
+.bg-lift .corner-bl { bottom: 14px; left: 14px; }
+.bg-lift .corner-br { bottom: 14px; right: 14px; }
+
+.corner-cross {
+  width: 18px; height: 18px;
+  position: relative;
+  opacity: 0.45;
+}
+.corner-cross::before,
+.corner-cross::after {
+  content: '';
+  position: absolute;
+  background: var(--gold);
+  border-radius: 1px;
+}
+/* Vertical bar */
+.corner-cross::before {
+  width: 1.5px; height: 18px;
+  top: 0; left: 50%; transform: translateX(-50%);
+}
+/* Horizontal bar */
+.corner-cross::after {
+  height: 1.5px; width: 18px;
+  left: 0; top: 50%; transform: translateY(-50%);
+}
 
 /* ════════════════════ MOBILE ════════════════════ */
 
@@ -541,8 +623,10 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
   .ba-slider { display: block; }
 
   /* ── SERVICES ── */
-  .services-grid { grid-template-columns: 1fr; gap: 14px; }
+  .services-grid { grid-template-columns: 1fr; gap: 14px; max-width: 95%; margin: 0 auto; }
   .services-row { margin-bottom: 36px; }
+  .ba-slider { max-width: 95%; margin: 0 auto; }
+  .ba-slider-track .ba-card { flex: 0 0 100%; max-width: 100%; }
   .services-row-heading { font-size: 18px; margin-bottom: 20px; }
   .svc-body { padding: 20px 20px 24px; }
   .svc-name { font-size: 18px; }
@@ -555,8 +639,11 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
     mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
   }
-  .review-card { width: 78vw; padding: 22px 18px; }
-  .review-text { font-size: 13px; }
+  .review-card { width: 76vw; }
+  .review-photo { aspect-ratio: 3/2.5; }
+  .review-body { padding: 14px 14px 16px; }
+  .review-name { font-size: 14px; }
+  .review-text { font-size: 12px; }
 
   /* ── ABOUT ── */
   .about-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -625,6 +712,10 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
 
 <!-- ② SPOTIFY — lifted, curves in from hero -->
 <section class="section-lifted bg-lift" id="portfolio">
+  <div class="corner-tl"><div class="corner-cross"></div></div>
+  <div class="corner-tr"><div class="corner-cross"></div></div>
+  <div class="corner-bl"><div class="corner-cross"></div></div>
+  <div class="corner-br"><div class="corner-cross"></div></div>
   <div class="section-label center">Portfolio</div>
   <h2 class="section-heading center">Tracks I've <span class="serif">engineered</span></h2>
   <p style="font-size:14px;color:var(--warm);margin-bottom:32px;line-height:1.85;max-width:580px;margin-left:auto;margin-right:auto;text-align:center;">Every track below passed through my hands — mixed, mastered, or produced from scratch. This is the work.</p>
@@ -641,21 +732,18 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
   <div class="ba-grid">
     <div class="ba-card">
       <div class="ba-video" style="padding:0;background:#000;">
-        <video src="ba_reel.mp4" style="width:100%;height:100%;object-fit:cover;display:block;" controls playsinline preload="metadata"></video>
+        <video src="ba_reel.mp4" controls playsinline preload="metadata"></video>
       </div>
-      <div class="ba-info"><div class="ba-title">Trap · Mixing</div><div class="ba-genre">Raw vs. Mixed</div></div>
     </div>
     <div class="ba-card">
       <div class="ba-video" style="padding:0;background:#000;">
-        <video src="ba_reel.mp4" style="width:100%;height:100%;object-fit:cover;display:block;" controls playsinline preload="metadata"></video>
+        <video src="ba_reel.mp4" controls playsinline preload="metadata"></video>
       </div>
-      <div class="ba-info"><div class="ba-title">R&amp;B · Mastering</div><div class="ba-genre">Raw vs. Mastered</div></div>
     </div>
     <div class="ba-card">
       <div class="ba-video" style="padding:0;background:#000;">
-        <video src="ba_reel.mp4" style="width:100%;height:100%;object-fit:cover;display:block;" controls playsinline preload="metadata"></video>
+        <video src="ba_reel.mp4" controls playsinline preload="metadata"></video>
       </div>
-      <div class="ba-info"><div class="ba-title">Hip-Hop · Full Production</div><div class="ba-genre">Demo vs. Final</div></div>
     </div>
   </div>
 
@@ -664,21 +752,19 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
     <div class="ba-slider-track" id="baSliderTrack">
       <div class="ba-card">
         <div class="ba-video" style="padding:0;background:#000;">
-          <video src="ba_reel.mp4" style="width:100%;height:100%;object-fit:cover;display:block;" controls playsinline preload="metadata"></video>
+          <video src="ba_reel.mp4" controls playsinline preload="metadata"></video>
         </div>
-        <div class="ba-info"><div class="ba-title">Trap · Mixing</div><div class="ba-genre">Raw vs. Mixed</div></div>
       </div>
       <div class="ba-card">
         <div class="ba-video" style="padding:0;background:#000;">
-          <video src="ba_reel.mp4" style="width:100%;height:100%;object-fit:cover;display:block;" controls playsinline preload="metadata"></video>
+          <video src="ba_reel.mp4" controls playsinline preload="metadata"></video>
         </div>
-        <div class="ba-info"><div class="ba-title">R&amp;B · Mastering</div><div class="ba-genre">Raw vs. Mastered</div></div>
       </div>
       <div class="ba-card">
         <div class="ba-video" style="padding:0;background:#000;">
-          <video src="ba_reel.mp4" style="width:100%;height:100%;object-fit:cover;display:block;" controls playsinline preload="metadata"></video>
+          <video src="ba_reel.mp4" controls playsinline preload="metadata"></video>
         </div>
-        <div class="ba-info"><div class="ba-title">Hip-Hop · Full Production</div><div class="ba-genre">Demo vs. Final</div></div>
+    </div>
       </div>
     </div>
     <div class="ba-slider-dots">
@@ -696,6 +782,10 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
 
 <!-- ④ SERVICES — lifted, curves both sides -->
 <section class="section-lifted bg-lift" id="services">
+  <div class="corner-tl"><div class="corner-cross"></div></div>
+  <div class="corner-tr"><div class="corner-cross"></div></div>
+  <div class="corner-bl"><div class="corner-cross"></div></div>
+  <div class="corner-br"><div class="corner-cross"></div></div>
   <div class="section-label center">Services</div>
   <h2 class="section-heading center">What I <span class="serif">offer</span></h2>
 
@@ -798,26 +888,232 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
   <p style="font-size:14px;color:var(--warm);text-align:center;margin-bottom:40px;margin-top:-24px;">Google Reviews</p>
   <div class="reviews-track-wrap">
     <div class="reviews-track">
-      <!-- 6 cards -->
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"The mix came back sounding better than I imagined. You can tell he actually listened to the reference."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"Fast, professional, clear communication throughout. The master sounds incredible on every platform."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"First time working with Jeevan and it won't be the last. He explained every decision. Real professional."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"Exceeded every expectation. The track came back cleaner and more powerful than I thought possible."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"Jeevan has a rare ability to understand what a track needs even when you struggle to describe it."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"Turnaround was faster than expected and the quality was top tier. My track is now getting consistent plays."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <!-- Duplicate for seamless loop -->
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"The mix came back sounding better than I imagined. You can tell he actually listened to the reference."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"Fast, professional, clear communication throughout. The master sounds incredible on every platform."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"First time working with Jeevan and it won't be the last. He explained every decision. Real professional."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"Exceeded every expectation. The track came back cleaner and more powerful than I thought possible."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"Jeevan has a rare ability to understand what a track needs even when you struggle to describe it."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
-      <div class="review-card"><div class="review-top"><div class="review-avatar">👤</div><div class="review-meta"><div class="review-name">Artist Name</div><div class="review-handle">@artisthandle</div></div></div><div class="review-stars">★★★★★</div><p class="review-text">"Turnaround was faster than expected and the quality was top tier. My track is now getting consistent plays."</p><div class="review-source"><div class="g-dot"></div>Google Review</div></div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"The mix came back sounding better than I imagined. You can tell he actually listened to the reference and understood what I was going for."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"Fast, professional, clear communication throughout. The master sounds incredible on every device and streaming platform."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"First time working with Jeevan and it won't be the last. He explained every decision and made sure I understood what he was doing."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"Exceeded every expectation. The track came back cleaner and more powerful than I thought possible. Will definitely be back."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"Jeevan has a rare ability to understand what a track needs even when you struggle to describe it. The result spoke for itself."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"Turnaround was faster than expected and the quality was top tier. My track is now getting consistent plays."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"The mix came back sounding better than I imagined. You can tell he actually listened to the reference and understood what I was going for."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"Fast, professional, clear communication throughout. The master sounds incredible on every device and streaming platform."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"First time working with Jeevan and it won't be the last. He explained every decision and made sure I understood what he was doing."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"Exceeded every expectation. The track came back cleaner and more powerful than I thought possible. Will definitely be back."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"Jeevan has a rare ability to understand what a track needs even when you struggle to describe it. The result spoke for itself."</p>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-photo">
+          <img src="review_placeholder.jpg" alt="Artist Name" />
+        </div>
+        <div class="review-body">
+          <div class="review-name">Artist Name</div>
+          <div class="review-meta-row">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-ig">
+              <div class="review-ig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="review-handle">@artisthandle</div>
+            </div>
+          </div>
+          <p class="review-text">"Turnaround was faster than expected and the quality was top tier. My track is now getting consistent plays."</p>
+        </div>
+      </div>
     </div>
   </div>
-</section>
+  </section>
 
 <!-- ⑥ ABOUT — ink bg -->
 <section class="section-lifted bg-lift" id="about">
+  <div class="corner-tl"><div class="corner-cross"></div></div>
+  <div class="corner-tr"><div class="corner-cross"></div></div>
+  <div class="corner-bl"><div class="corner-cross"></div></div>
+  <div class="corner-br"><div class="corner-cross"></div></div>
   <div class="section-label">About</div>
   <div class="about-grid">
     <div>
@@ -855,6 +1151,10 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
 
 <!-- ⑧ BEATS — lifted -->
 <section class="section-lifted bg-lift" id="beats">
+  <div class="corner-tl"><div class="corner-cross"></div></div>
+  <div class="corner-tr"><div class="corner-cross"></div></div>
+  <div class="corner-bl"><div class="corner-cross"></div></div>
+  <div class="corner-br"><div class="corner-cross"></div></div>
   <div class="section-label center">Beats</div>
   <h2 class="section-heading center">Beats for your <span class="serif">next record</span></h2>
   <p style="font-size:14px;color:var(--warm);margin-bottom:32px;line-height:1.85;max-width:580px;margin-left:auto;margin-right:auto;text-align:center;">Browse the catalog. Exclusive and non-exclusive licenses available. Built for artists who need something that hits.</p>
@@ -878,8 +1178,16 @@ footer { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
       <h2 class="section-heading">Let's make<br>something <span class="serif">real.</span></h2>
       <p class="contact-desc">Whether it's a mix, a master, a custom beat, or a teaching session — reach out and tell me about your project. I respond within 24 hours.</p>
       <div class="contact-methods">
-        <a href="mailto:contact@jeevankhatri.com" class="c-method"><div class="c-icon">✉</div>contact@jeevankhatri.com</a>
-        <a href="https://www.instagram.com/jeevan_khatri?igsh=d3VoZnBhOWhybHFp" class="c-method" target="_blank" rel="noopener"><div class="c-icon">◈</div>@jeevan_khatri</a>
+        <a href="mailto:contact@jeevankhatri.com" class="c-method">
+          <div class="c-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          </div>contact@jeevankhatri.com
+        </a>
+        <a href="https://www.instagram.com/jeevan_khatri?igsh=d3VoZnBhOWhybHFp" class="c-method" target="_blank" rel="noopener">
+          <div class="c-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </div>@jeevan_khatri
+        </a>
       </div>
     </div>
     <div class="form" id="contactForm">
